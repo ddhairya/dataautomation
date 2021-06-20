@@ -86,14 +86,14 @@ if Path(master.temppath+"stepfive.xlsx").exists() and Path(master.temppath+"payr
 
         if isinstance(wrkhrs_data,float):
 
-            if int(wrkhrs_data) > 9:
-                miss_wrkhrs_data_cell.value = 9
+            if int(wrkhrs_data) > master.normal_work_hr:
+                miss_wrkhrs_data_cell.value = master.normal_work_hr
                 # miss_not_data_cell.value = int(wrkhrs_data) - 9
-                if int(wrkhrs_data) - 9 > 2:
-                    miss_not_data_cell.value = 2
-                    miss_exot_data_cell.value = int(wrkhrs_data) - 9 - 2
+                if int(wrkhrs_data) - master.normal_work_hr > master.normal_ot_hr:
+                    miss_not_data_cell.value = master.normal_ot_hr
+                    miss_exot_data_cell.value = wrkhrs_data - master.normal_work_hr - master.normal_ot_hr
                 else:
-                    miss_not_data_cell.value = int(wrkhrs_data) - 9
+                    miss_not_data_cell.value = wrkhrs_data - master.normal_work_hr
 
             # there will never be a scenario where wrk hr will be less than 9, still for safer side
             else:
@@ -119,20 +119,23 @@ if Path(master.temppath+"stepfive.xlsx").exists() and Path(master.temppath+"payr
             cort_not_data_cell = sh4.cell(cort_row,5)
             cort_weekoff_data_cell = sh4.cell(cort_row, 9)
             
-            if row > 1 and float(wrkhrs_data) >= 9.0:
+            if row > 1 and float(wrkhrs_data) >= master.normal_work_hr:
                 cort_compcode_data_cell.value = compcode_data
                 cort_emp_data_cell.value = emp_data
                 cort_date_data_cell.value = date_data
                 cort_comp_data_cell.value = comp_data
                 cort_wrkhrs_data_cell.value = 9.0
-                cort_not_data_cell.value = float(wrkhrs_data) - 9.0
+                if float(wrkhrs_data) - master.normal_work_hr > master.normal_ot_excp_hr:
+                    cort_not_data_cell.value = round((float(wrkhrs_data) - master.normal_work_hr),2)
+                else:
+                    cort_not_data_cell.value = 0
                 cort_weekoff_data_cell.value = "P"
             elif row > 1:
                 cort_compcode_data_cell.value = compcode_data
                 cort_emp_data_cell.value = emp_data
                 cort_date_data_cell.value = date_data
                 cort_comp_data_cell.value = comp_data
-                cort_wrkhrs_data_cell.value = wrkhrs_data
+                cort_wrkhrs_data_cell.value = round(wrkhrs_data,2)
                 cort_not_data_cell.value = not_data
                 cort_weekoff_data_cell.value = "P"
             cort_row += 1

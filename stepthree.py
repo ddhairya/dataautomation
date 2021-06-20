@@ -53,6 +53,16 @@ if Path(master.temppath+"steptwo.xlsx").exists():
             miss_date_data_cell.value = date_data
             miss_comp_data_cell.value = comp_data
             miss_wrkhrs_data_cell.value = wrkhrs_data
+
+            # This is to create a record in the payroll file even working hrs are more than 11,
+            # by avoiding actual work hrs and puting the static.
+
+            # new_compcode_data_cell.value = compcode_data
+            # new_emp_data_cell.value = emp_data[:master.emp]
+            # new_date_data_cell.value = date_data
+            # new_comp_data_cell.value = comp_data
+            # new_wrkhrs_data_cell.value = 11
+
         elif date_data is not None and isinstance(wrkhrs_data,float) and wrkhrs_data < 0.0:
             miss_compcode_data_cell.value = compcode_data
             miss_emp_data_cell.value = emp_data[:master.emp]
@@ -71,6 +81,8 @@ if Path(master.temppath+"steptwo.xlsx").exists():
             new_date_data_cell.value = date_data
             new_comp_data_cell.value = comp_data
             new_wrkhrs_data_cell.value = wrkhrs_data
+
+
     wb1.save(master.temppath+"stepthree.xlsx")
     wb2.save(master.temppath+"payroll.xlsx")
     status = "Done"

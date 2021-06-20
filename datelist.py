@@ -15,6 +15,7 @@ if curt_month == 1:
 else:
     numdays = calendar.monthrange(year=curt_year,month=curt_month-1)[1]
 # print(numdays)
+cur_numdays = calendar.monthrange(year=curt_year, month=curt_month)[1]
 
 # store the dates from constant n = 16th of previous month to 15th of current as per payroll cycle
 datelist = []

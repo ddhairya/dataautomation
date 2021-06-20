@@ -3,10 +3,11 @@ import openpyxl as xl
 from pathlib import Path
 import os
 
+# taking employee master to get the department
 step = "seven"
 status = ""
 
-if Path(master.masterpath+"empmaster.xlsx").exists():
+if Path(master.masterpath+"empmaster.xlsx").exists() and Path(master.temppath+"payroll.xlsx").exists():
     print("Step "+step)
     wb1 = xl.load_workbook(master.masterfile+"empmaster.xlsx")
     sh1 = wb1["Sheet1"]
@@ -19,8 +20,8 @@ if Path(master.masterpath+"empmaster.xlsx").exists():
         emp_data = sh2.cell(row,2).value
         department_cell = sh2.cell(row,19)
         for masterrow in range(1,mastermaxrow+1):
-            master_emp_data = sh1.cell(masterrow,1).value
-            master_department = sh1.cell(masterrow,5).value
+            master_emp_data = str(sh1.cell(masterrow,1).value)
+            master_department = str(sh1.cell(masterrow,5).value)
             if master_department is not None and emp_data == master_emp_data :
                 department_cell.value = master_department
                 # print(emp_data + "-" + master_department)
@@ -32,8 +33,8 @@ if Path(master.masterpath+"empmaster.xlsx").exists():
         emp_data = sh3.cell(row, 2).value
         department_cell = sh3.cell(row, 19)
         for masterrow in range(1, mastermaxrow + 1):
-            master_emp_data = sh1.cell(masterrow, 1).value
-            master_department = sh1.cell(masterrow, 5).value
+            master_emp_data = str(sh1.cell(masterrow, 1).value)
+            master_department = str(sh1.cell(masterrow, 5).value)
             if master_department is not None and emp_data == master_emp_data:
                 department_cell.value = master_department
                 # print(emp_data + "-" + master_department)

@@ -17,7 +17,7 @@ if path.exists():
     if master.file.exists():
         # load the master file
         print("Step " + step)
-        wb = xl.load_workbook(master.filepath+"empshitsum.xlsx")
+        wb = xl.load_workbook(master.filepath+"empshiftsum.xlsx")
         sh1 = wb["Sheet1"]
         sh2 = wb.create_sheet("stepone")
         maxrow = sh1.max_row
@@ -27,7 +27,9 @@ if path.exists():
             raw_data = sh1.cell(row,1).value
             raw_wrhr = sh1.cell(row,7).value
             # it will store the working hours in new sheet
-            if isinstance(raw_wrhr,float):
+            # print(row)
+            # print(type(raw_wrhr))
+            if isinstance(raw_wrhr,float) or isinstance(raw_wrhr,int):
                 new_raw_wrhr = sh2.cell(row,5)
                 new_raw_wrhr.value = raw_wrhr
             # it will check the rows with date and overcome the exception is it's run in the month of Jan
@@ -51,14 +53,14 @@ if path.exists():
                 new_raw_compcode = sh2.cell(row, 1)
                 new_raw_compcode.value = master.company_code
                 # removing empty rows and taking only date
-                if isinstance(raw_wrhr,float):
+                if isinstance(raw_wrhr,float) or isinstance(raw_wrhr,int):
                     new_raw_date = sh2.cell(row,3)
                     new_raw_date.value = raw_data
         # saving in the workbook
         wb.save(master.temppath + "stepone.xlsx")
         status = "Done"
     else:
-        print("Please copy the empshitsum.xlsx inside c:/it/PayrollAuto/")
+        print("Please copy the empshiftsum.xlsx inside c:/it/PayrollAuto/")
 else:
     path = "c:/it/PayrollAuto/"
     os.mkdir(path)

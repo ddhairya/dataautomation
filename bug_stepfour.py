@@ -18,47 +18,31 @@ if Path(master.temppath+"stepthree.xlsx").exists():
     sh2 = wb.create_sheet("stepfour")
     maxrow = sh1.max_row
     id = 1
-    count = 1
     for row in range(1, maxrow+1):
         compcode_data = sh1.cell(row,1).value
         emp_data = sh1.cell(row,2).value
         date_data = sh1.cell(row,3).value
         comp_data = sh1.cell(row,4).value
+
         if comp_data == "LA BRIOCHE CPU":
             pass
-        elif emp_data is None and date_data is None:
-            id = 1
-            emp_date = []
-            count = 1
-
         elif emp_data is not None and date_data is not None:
-
-            if count == 2:
-                emp_date.append(date_data)
-                missing_date = np.setdiff1d(dl.datelist, emp_date).tolist()
-                # print(missing_date)
-                missing_date.sort(key=lambda date: datetime.strptime(date, "%d/%m/%Y"))
-
-                emp[emp_id] = missing_date
-                # print(emp[emp_id])
-                # print(count)
-            else:
-                emp_date.append(date_data)
+            emp_date.append(date_data)
             # print(emp_date)
         elif emp_data is not None and date_data is None:
             if id == 1:
                 emp_id = emp_data+compcode_data+comp_data
                 # print(emp_id)
                 id = 2
-                count = 2
             elif id == 2:
                 missing_date = np.setdiff1d(dl.datelist, emp_date).tolist()
                 # print(missing_date)
                 missing_date.sort(key=lambda date: datetime.strptime(date, "%d/%m/%Y"))
 
                 emp[emp_id] = missing_date
-                # print(emp[emp_id])
-
+                # print(emp[emp_id])stepfour.py
+                id = 1
+                emp_date = []
         elif emp_data is None and date_data is None:
             pass
 

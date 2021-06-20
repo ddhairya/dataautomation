@@ -30,7 +30,10 @@ if Path(master.temppath + "stepone.xlsx").exists():
         # if condition try to get the compy name next to each records
         if comp_data is not None:
             temp_comp_data = comp_data
+            new_comp_data_cell.value = temp_comp_data
         # elif date_data is not None:
+        elif comp_data is None and emp_data is not None:
+            pass
         else:
             new_comp_data_cell.value = temp_comp_data
         # if condition try to get the emp name next to each records
